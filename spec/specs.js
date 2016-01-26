@@ -6,15 +6,19 @@ describe('Ticket', function () {
     expect(testTicket.age).to.equal(16);
   });
 
-  it("creates a discounted price based on time", function () {
+  it("creates a discounted price for matinee", function () {
     var testTicket = new Ticket("Space Damon", "3:30", 16)
     expect(testTicket.price()).to.equal("$5");
   });
 
-
-
-  it("displays ticketInfo method by concatenation", function () {
-    var testTicket = new Ticket("Space Damon", "3:30", 16);
-    expect(testTicket.ticketInfo()).to.equal("You're going to see Space Damon at 3:30");
+  it("creates a regular price for evening shows", function () {
+    var testTicket = new Ticket("Space Damon", "4:30", 16)
+    expect(testTicket.price()).to.equal("$10");
   });
+
+  it("creates a discount price based on age if not a matinee", function () {
+    var testTicket = new Ticket("Space Damon", "4:30", 65)
+    expect(testTicket.price()).to.equal("$6");
+  });
+
 });
