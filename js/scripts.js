@@ -1,7 +1,5 @@
-var movieGoers = 1;
-
-function Ticket (name, time, age, quantity) {
-  this.name = name;
+function Ticket (movieName, time, age, quantity) {
+  this.movieName = movieName;
   this.time = time;
   this.age = age;
   this.quantity = quantity;
@@ -40,19 +38,19 @@ function createNewTicket () {
 
 $(document).ready(function() {
   $("body").data("ticketTotal", 0)
-
+  $("body").data("movieGoers", 0)
   $("form#movies").submit(function(event) {
+
     var newTicket = createNewTicket();
     var ticketPrice = newTicket.price();
     ticketPrice = ticketPrice - newTicket.seniorDiscount(ticketPrice);
-      // ticketPrice = $("#movie-price").val();
-    console.log(ticketPrice);
-    debugger;
     var tempTotal = $("body").data("ticketTotal");
-    tempTotal = tempTotal + ticketPrice;
-    console.log(tempTotal);
+    tempTotal = ticketPrice + tempTotal;
     $("body").data("ticketTotal", tempTotal);
-    movieGoers =+ 1;
+    var movieGoers = $("body").data("movieGoers") + 1;
+    $("body").data("movieGoers", movieGoers)
+    $(".movie-name").text(newTicket.movieName);
+    $(".movie-time").text(newTicket.time);
     $(".ticketQuantity").text(movieGoers);
     $(".movie-price").text(tempTotal);
     $("#show-movie").fadeIn();
@@ -60,30 +58,5 @@ $(document).ready(function() {
     event.preventDefault();
 
   });
-  // $("form#movies").submit(function(event) {
-  //   event.preventDefault();
-  //   var chosenMovie = $("select#movieName").val();
-  //   var chosenMovieTime = $("input#movieTime").val();
-  //   var chosenAge = $("input#userAge").val();
-  //   var chosenQuantity = $("input#ticketQuantity").val();
-  //   var newTicket = new Ticket(chosenMovie, chosenMovieTime, chosenAge, chosenQuantity);
-  //   // if (chosenQuantity > 1) {
-  //   //   $(".ticketQuantity").text(chosenQuantity + " tickets.");
-  //   // } else if (chosenQuantity === 1) {
-  //   //
-  //   // } else {
-  //   //   alert("Bad values")
-  //   // }
-  //
-  //   $(".movie-name").text(chosenMovie);
-  //   $(".movie-time").text(chosenMovieTime);
-  //   $(".movie-price").text(newTicket.price());
-  //   $("#show-movie").fadeIn();
-  //
-  //   $("select#movieName").val("");
-  //   $("input#movieTime").val("");
-  //   $("input#ticketQuantity").val("");
-  // });
-  //
 
 });
