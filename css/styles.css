@@ -1,0 +1,15 @@
+.form-area {
+  max-width: 800px;
+}
+
+#show-movie {
+  display: none;
+  border-color: black;
+  border-width: 3px;
+  margin-top: -66px;
+}
+
+#show-movie h3 {
+  background-color: black;
+  color: white;
+}
