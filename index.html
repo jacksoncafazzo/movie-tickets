@@ -27,27 +27,28 @@
               <label for="movieTime">Movie Time</label>
               <input type="time" class="form-control" id="movieTime">
             </div>
-            <div class="form-group">
+            <div class="form-group movieTime pull-right">
               <label for="movieTime">Age</label>
-              <input type="number" class="form-control" id="userAge">
+              <input type="number-inline" name="movieTime" class="form" id="userAge">
+              <button class="btn btn-inline" type"submit">Add Movie Goer</button>
             </div>
-            <div class="form-group">
+          </form>
+            <!-- <div class="form-group">
               <label for="movieQuantity">Quantity</label>
               <input type="number" class="form-control" id="ticketQuantity">
             </div>
-            <button type="submit" class="btn">Add</button>
-          </form>
+            <button type="submit" class="btn">Calculate Tickets</button>
+          </form> -->
         </div>
 
 
-        <div class="col-md-6">
-          <div id="show-movie">
-            <h2></h2>
-
-            <p>Movie Name: <span class="movie-name"></span></p>
-            <p>Movie Time: <span class="movie-time"></span></p>
-            <p>Total Price: <span class="movie-price"></span></p>
-
+        <div id="show-movie" class="col-md-6">
+          <h3>Your Ticket<span class"tickets-plural"></span></h3>
+          <p>Movie Name: <span class="movie-name"></span></p>
+          <p>Movie Time: <span class="movie-time"></span></p>
+          <p>Number of Tickets: <span class="ticketQuantity"></span></p>
+          <div id="totalPrice">
+            <p>Total Price: $<span class="movie-price"></span></p>
           </div>
         </div>
       </div>
