@@ -1,3 +1,5 @@
+var movieGoers = 1;
+
 function Ticket (name, time, age, quantity) {
   this.name = name;
   this.time = time;
@@ -6,38 +8,82 @@ function Ticket (name, time, age, quantity) {
 }
 
 Ticket.prototype.price = function () {
-
-  if (this.time <= "16:00"){
-    var price = 5;
-  } else if (this.time > "16:00" && this.age < 60) {
-    var price = 10;
-  } else if (this.time > "16:00" && this.age >= 60) {
-    var price = 6;
+  if (this.time <= "16:00") {
+    return 5;
+  } else if (this.time > "16:00") {
+    return 10;
   } else {
     alert("Please fill out all fields");
   }
-  // var totalPrice = this.quantity * price
-  return "$" + (this.quantity * price);
+  return;
+}
+
+Ticket.prototype.seniorDiscount = function (price) {
+    var seniorDiscount = 0;
+    if (this.age >= 60) {
+      seniorDiscount = (price) * 0.2;
+    } else if (this.age < 60) {
+
+    } else {
+      alert("oh no what's going on!?")
+    }
+    return seniorDiscount;
+}
+
+function createNewTicket () {
+  var chosenMovie = $("select#movieName").val();
+  var chosenMovieTime = $("input#movieTime").val();
+  var chosenAge = $("input#userAge").val();
+  var newTicket = new Ticket(chosenMovie, chosenMovieTime, chosenAge, +1);
+  return newTicket;
 }
 
 $(document).ready(function() {
-  $("form#movies").submit(function (event) {
-    event.preventDefault();
-    var chosenMovie = $("select#movieName").val();
-    var chosenMovieTime = $("input#movieTime").val();
-    var chosenAge = $("input#userAge").val();
-    var chosenQuantity = $("input#ticketQuantity").val();
-    var newTicket = new Ticket(chosenMovie, chosenMovieTime, chosenAge, chosenQuantity);
-    $(".movie-name").text(chosenMovie);
-    $(".movie-time").text(chosenMovieTime);
-    $(".movie-price").text(newTicket.price());
+  $("body").data("ticketTotal", 0)
 
-
-    $("select#movieName").val("");
-    $("input#movieTime").val("");
+  $("form#movies").submit(function(event) {
+    var newTicket = createNewTicket();
+    var ticketPrice = newTicket.price();
+    ticketPrice = ticketPrice - newTicket.seniorDiscount(ticketPrice);
+      // ticketPrice = $("#movie-price").val();
+    console.log(ticketPrice);
+    debugger;
+    var tempTotal = $("body").data("ticketTotal");
+    tempTotal = tempTotal + ticketPrice;
+    console.log(tempTotal);
+    $("body").data("ticketTotal", tempTotal);
+    movieGoers =+ 1;
+    $(".ticketQuantity").text(movieGoers);
+    $(".movie-price").text(tempTotal);
+    $("#show-movie").fadeIn();
     $("input#userAge").val("");
-    $("input#ticketQuantity").val("");
-
+    event.preventDefault();
 
   });
+  // $("form#movies").submit(function(event) {
+  //   event.preventDefault();
+  //   var chosenMovie = $("select#movieName").val();
+  //   var chosenMovieTime = $("input#movieTime").val();
+  //   var chosenAge = $("input#userAge").val();
+  //   var chosenQuantity = $("input#ticketQuantity").val();
+  //   var newTicket = new Ticket(chosenMovie, chosenMovieTime, chosenAge, chosenQuantity);
+  //   // if (chosenQuantity > 1) {
+  //   //   $(".ticketQuantity").text(chosenQuantity + " tickets.");
+  //   // } else if (chosenQuantity === 1) {
+  //   //
+  //   // } else {
+  //   //   alert("Bad values")
+  //   // }
+  //
+  //   $(".movie-name").text(chosenMovie);
+  //   $(".movie-time").text(chosenMovieTime);
+  //   $(".movie-price").text(newTicket.price());
+  //   $("#show-movie").fadeIn();
+  //
+  //   $("select#movieName").val("");
+  //   $("input#movieTime").val("");
+  //   $("input#ticketQuantity").val("");
+  // });
+  //
+
 });
