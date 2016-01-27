@@ -1,8 +1,20 @@
-function Ticket (movieName, time, age, quantity) {
-  this.movieName = movieName;
+function Ticket (movie, time, age, quantity) {
+  this.movie = movie;
   this.time = time;
   this.age = age;
   this.quantity = quantity;
+}
+
+function MovieMaker (movieName, showTimes, movieRun) {
+  this.movieName = movieName;
+  this.showTimes = showTimes;
+  this.movieRun = movieRun;
+}
+
+function ShowTimes (matinee, evening, late) {
+  this.matinee = matinee;
+  this.evening = evening;
+  this.late = late;
 }
 
 Ticket.prototype.price = function () {
@@ -23,14 +35,34 @@ Ticket.prototype.seniorDiscount = function (price) {
     } else if (this.age < 60) {
 
     } else {
-      alert("oh no what's going on!?")
+      alert("Did you enter an age?");
     }
     return seniorDiscount;
 }
 
+function fillMovieObject (chosenMovie) {
+  if (chosenMovie === "Space Damon") {
+    var showTimes = new ShowTimes("3:30","5:45","8:00");
+    var movie = new MovieMaker(chosenMovie, showTimes, 2);
+  }
+  return movie;
+}
+
+
 function createNewTicket () {
   var chosenMovie = $("select#movieName").val();
-  var chosenMovieTime = $("input#movieTime").val();
+
+  // debugger;
+  //   var movieRun = new MovieRun(chosenMovie, 2);
+  //   } if else (chosenMovie = "Madagascar 7") {
+  //     var movieRun = new MovieRun(chosenMovie, 1);
+  //   } if else (chosenMovie = "Space Damon Returns") {
+  //     var movieRun = new MovieRun(chosenMovie, 1);
+  //   } else {
+  //     alert("How did you get here?")
+  //   }
+  // var chosenMovie = movieRun;
+  // var chosenMovieTime = $("input#movieTime").val();
   var chosenAge = $("input#userAge").val();
   var newTicket = new Ticket(chosenMovie, chosenMovieTime, chosenAge, +1);
   return newTicket;
@@ -39,8 +71,17 @@ function createNewTicket () {
 $(document).ready(function() {
   $("body").data("ticketTotal", 0)
   $("body").data("movieGoers", 0)
-  $("form#movies").submit(function(event) {
 
+  $("select#movieName").select(function(event) {
+    var chosenMovie = $("select#movieName").val();
+    var movie = fillMovieObject(chosenMovie);
+    for (var index = 0; index < 2; index + 1) {
+      $(".movieTimes").append("<li>" + movie.showTimes[index] + "</li>");
+    }
+
+  });
+
+  $("form#movies").submit(function(event) {
     var newTicket = createNewTicket();
     var ticketPrice = newTicket.price();
     ticketPrice = ticketPrice - newTicket.seniorDiscount(ticketPrice);
@@ -56,7 +97,5 @@ $(document).ready(function() {
     $("#show-movie").fadeIn();
     $("input#userAge").val("");
     event.preventDefault();
-
   });
-
 });
